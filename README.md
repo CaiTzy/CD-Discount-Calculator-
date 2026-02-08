@@ -63,10 +63,18 @@ chmod 755 *.php
 
 ### Access Points
 
-1. **Login Page**: `http://localhost/login.php`
-2. **Enrollment Form**: `http://localhost/enrollment_form.php` (requires login)
-3. **Student List**: `http://localhost/student_list.php` (requires login)
-4. **Admin Dashboard**: `http://localhost/admin_dashboard.php` (admin only)
+**If installed in subdirectory (e.g., htdocs/enrollment/):**
+
+1. **System Check**: `http://localhost/enrollment/check_system.php` ⭐ (verify setup)
+2. **Home/Login**: `http://localhost/enrollment/`
+3. **Login Page**: `http://localhost/enrollment/login.php`
+4. **Enrollment Form**: `http://localhost/enrollment/enrollment_form.php` (requires login)
+5. **Student List**: `http://localhost/enrollment/student_list.php` (requires login)
+6. **Admin Dashboard**: `http://localhost/enrollment/admin_dashboard.php` (admin only)
+
+**If installed in root htdocs directory:**
+
+Replace `/enrollment/` with `/` in all URLs above.
 
 ## Database Schema
 
@@ -126,6 +134,24 @@ chmod 755 *.php
 
 ## Troubleshooting
 
+### 404 "Not Found" Error (Most Common Issue)
+
+If you see "The requested URL was not found on this server":
+
+**Quick Fix:**
+1. Ensure files are in Apache's document root:
+   - XAMPP (Windows): `C:\xampp\htdocs\enrollment\`
+   - WAMP (Windows): `C:\wamp64\www\enrollment\`
+   - Linux: `/var/www/html/enrollment/`
+
+2. Access the correct URL:
+   - `http://localhost/enrollment/` (if in subfolder)
+   - `http://localhost/` (if in root htdocs)
+
+3. **Run system check:** `http://localhost/enrollment/check_system.php`
+
+4. **See detailed guide:** [APACHE_SETUP.md](APACHE_SETUP.md)
+
 ### Connection Issues
 
 If you see "Connection failed" error:
@@ -147,6 +173,13 @@ If you get permission errors:
 chmod -R 755 /path/to/project
 chown -R www-data:www-data /path/to/project  # For Apache on Linux
 ```
+
+### Apache Not Working
+
+1. **Check if Apache is running** (XAMPP Control Panel)
+2. **Verify .htaccess file exists** in project folder
+3. **Enable mod_rewrite** in Apache configuration
+4. **Set AllowOverride All** in httpd.conf
 
 ## Future Enhancements
 
