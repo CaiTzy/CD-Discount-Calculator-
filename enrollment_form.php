@@ -67,7 +67,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt->execute()) {
             $success_message = "✅ Enrollment submitted successfully! Your total fee is ₱" . number_format($total_amount, 2) . " (Discount: " . $discount_percent . "%)";
         } else {
-            $error_message = "❌ Error: LRN might already exist or " . htmlspecialchars($conn->error);
+            // Log detailed error securely
+            error_log("Enrollment error: " . $conn->error);
+            $error_message = "❌ Error: Unable to submit enrollment. The LRN might already exist or there was a database issue. Please try again.";
         }
         
         $stmt->close();
@@ -153,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <label class="form-label fw-bold">Age: *</label>
-                                <input type="number" name="age" id="age" class="form-control" min="3" max="100" required>
+                                <input type="number" name="age" id="age" class="form-control" min="12" max="100" required>
                                 <small class="text-muted" id="discountInfo"></small>
                             </div>
                             <div class="col-md-4 mb-3">
