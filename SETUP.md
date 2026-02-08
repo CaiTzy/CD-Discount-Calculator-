@@ -1,5 +1,21 @@
 # Quick Setup Guide - Smart Online Enrollment System
 
+> **🚨 GETTING 404 ERROR?** See [QUICK_FIX.md](QUICK_FIX.md) or [APACHE_SETUP.md](APACHE_SETUP.md)
+
+---
+
+## ⚡ Quick Start (For XAMPP Users)
+
+### If You're Getting "404 Not Found" Error:
+
+1. **Copy ALL files to:** `C:\xampp\htdocs\enrollment\`
+2. **Start Apache & MySQL** in XAMPP Control Panel
+3. **Import database:** Open `http://localhost/phpmyadmin`, create `enrollment_system`, import `schema.sql`
+4. **Access:** `http://localhost/enrollment/check_system.php` ← This checks everything!
+5. **Login:** `http://localhost/enrollment/` with username: `admin`, password: `admin123`
+
+---
+
 ## Prerequisites
 - XAMPP/WAMP/LAMP or any PHP development environment
 - MySQL 5.7+ or MariaDB
