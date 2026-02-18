@@ -9,6 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $success_message = "";
 $error_message = "";
+$warning_message = "";
 
 // Get available tracks with pricing
 $tracks_query = "SELECT track_id, strand_course, enrollment_fee FROM Track ORDER BY track_id";
@@ -18,6 +19,11 @@ if ($tracks_result) {
     while ($row = $tracks_result->fetch_assoc()) {
         $tracks[] = $row;
     }
+}
+
+// Check if there are no tracks available
+if (count($tracks) == 0) {
+    $warning_message = "⚠️ No tracks available! The system administrator must add tracks before students can enroll. Please contact the administrator or run the diagnostic tool.";
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -32,14 +38,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $guardian_name_contact = trim($_POST["guardian_name_contact"]);
     $track_id = trim($_POST["track_id"]);
     
-    // Get enrollment fee for selected track
+    // Validate that track_id exists before proceeding
     $track_stmt = $conn->prepare("SELECT enrollment_fee FROM Track WHERE track_id = ?");
     $track_stmt->bind_param("i", $track_id);
     $track_stmt->execute();
     $track_result = $track_stmt->get_result();
-    $track_data = $track_result->fetch_assoc();
-    $enrollment_fee = $track_data['enrollment_fee'] ?? 5000.00;
-    $track_stmt->close();
+    
+    if ($track_result->num_rows == 0) {
+        $error_message = "❌ Error: Invalid track selected. Please select a valid track from the list.";
+        $track_stmt->close();
+    } else {
+        $track_data = $track_result->fetch_assoc();
+        $enrollment_fee = $track_data['enrollment_fee'] ?? 5000.00;
+        $track_stmt->close();
+    }
     
     // Calculate discount based on age (early bird discount)
     $discount_percent = 0;
@@ -53,8 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $discount_amount = ($enrollment_fee * $discount_percent) / 100;
     $total_amount = $enrollment_fee - $discount_amount;
     
-    // Validate required fields
-    if (!empty($lrn) && !empty($first_name) && !empty($last_name) && !empty($address) && !empty($track_id)) {
+    // Validate required fields and track validity
+    if (!empty($lrn) && !empty($first_name) && !empty($last_name) && !empty($address) && !empty($track_id) && empty($error_message)) {
         
         // Ensure proper data types
         $age = (int)$age;
@@ -67,13 +79,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt->execute()) {
             $success_message = "✅ Enrollment submitted successfully! Your total fee is ₱" . number_format($total_amount, 2) . " (Discount: " . $discount_percent . "%)";
         } else {
-            // Log detailed error securely
-            error_log("Enrollment error: " . $conn->error);
-            $error_message = "❌ Error: Unable to submit enrollment. The LRN might already exist or there was a database issue. Please try again.";
+            // Check if it's a foreign key error
+            if (strpos($conn->error, 'foreign key constraint') !== false || strpos($conn->error, 'FK_Track_Application') !== false) {
+                error_log("Foreign key constraint error: " . $conn->error);
+                $error_message = "❌ Error: The selected track is invalid. Please refresh the page and select a track from the dropdown. If the problem persists, contact the administrator.";
+            } else {
+                // Log detailed error securely
+                error_log("Enrollment error: " . $conn->error);
+                $error_message = "❌ Error: Unable to submit enrollment. The LRN might already exist or there was a database issue. Please try again.";
+            }
         }
         
         $stmt->close();
-    } else {
+    } else if (empty($error_message)) {
         $error_message = "⚠️ Please fill in all required fields.";
     }
 }
@@ -118,6 +136,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-md-8">
                 <div class="enrollment-card p-4 mb-4">
                     <h2 class="mb-4 text-center">Student Enrollment Form</h2>
+                    
+                    <?php if (!empty($warning_message)): ?>
+                        <div class="alert alert-warning shadow-sm">
+                            <?php echo $warning_message; ?>
+                            <hr>
+                            <p class="mb-0">
+                                <a href="diagnose_fk_error.php" class="btn btn-sm btn-primary">Run Diagnostic Tool</a>
+                                <a href="http://localhost/phpmyadmin" target="_blank" class="btn btn-sm btn-secondary">Open phpMyAdmin</a>
+                            </p>
+                        </div>
+                    <?php endif; ?>
                     
                     <?php if (!empty($success_message)): ?>
                         <div class="alert alert-success shadow-sm"><?php echo $success_message; ?></div>
