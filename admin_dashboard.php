@@ -93,6 +93,7 @@ if ($track_stats_result) {
             <span class="navbar-brand mb-0 h1">🎓 Smart Online Enrollment - Admin</span>
             <div>
                 <span class="me-3">Welcome, <strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong></span>
+                <a href="manage_tracks.php" class="btn btn-sm btn-success me-2">🎯 Manage Tracks</a>
                 <a href="student_list.php" class="btn btn-sm btn-info me-2">View Students</a>
                 <a href="logout.php" class="btn btn-sm btn-outline-danger">Logout</a>
             </div>
