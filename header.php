@@ -39,7 +39,7 @@ $user_role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">
+            <a class="navbar-brand" href="home.php">
                 <i class="bi bi-mortarboard-fill"></i> Smart Enrollment
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -49,7 +49,7 @@ $user_role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
                 <ul class="navbar-nav me-auto">
                     <?php if (!$is_logged_in): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php">
+                            <a class="nav-link" href="home.php">
                                 <i class="bi bi-house-door"></i> Home
                             </a>
                         </li>
@@ -60,8 +60,8 @@ $user_role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="admin_dashboard.php">
-                                <i class="bi bi-speedometer2"></i> Dashboard
+                            <a class="nav-link" href="home.php">
+                                <i class="bi bi-house-door"></i> Home
                             </a>
                         </li>
                         <li class="nav-item">
@@ -84,14 +84,14 @@ $user_role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
                                 <span class="badge bg-light text-dark"><?php echo htmlspecialchars($user_role); ?></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="logout.php">
+                                <li><a class="dropdown-item" href="simple_logout.php">
                                     <i class="bi bi-box-arrow-right"></i> Logout
                                 </a></li>
                             </ul>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="login.php">
+                            <a class="nav-link" href="simple_login.php">
                                 <i class="bi bi-box-arrow-in-right"></i> Login
                             </a>
                         </li>
