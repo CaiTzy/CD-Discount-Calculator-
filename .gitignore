@@ -1,0 +1,34 @@
+# Uploads directory (contains user documents)
+uploads/*
+!uploads/.gitkeep
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+error.log
+access.log
+
+# Config files with sensitive data (backup originals)
+# config.php
+
+# Database backups
+*.sql.gz
+backup_*.sql
+
+# Cache
+cache/
+*.cache
