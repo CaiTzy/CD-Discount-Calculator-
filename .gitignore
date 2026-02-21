@@ -1,0 +1,26 @@
+# Uploaded documents
+uploads/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+
+# PHP
+vendor/
+composer.lock
+
+# Environment files
+.env
+.env.local
