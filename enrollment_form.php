@@ -43,10 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             // Insert new application
             $insert_sql = "INSERT INTO Application (lrn, first_name, last_name, address, birthdate, gender, guardian_name_contact, track_id, status) 
-                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Pending')";
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             
             $stmt = mysqli_prepare($conn, $insert_sql);
-            mysqli_stmt_bind_param($stmt, 'ssssssi', $lrn, $first_name, $last_name, $address, $birthdate, $gender, $guardian, $track_id);
+            $status = 'Pending';
+            mysqli_stmt_bind_param($stmt, 'sssssssis', $lrn, $first_name, $last_name, $address, $birthdate, $gender, $guardian, $track_id, $status);
             
             if (mysqli_stmt_execute($stmt)) {
                 // Log the enrollment
