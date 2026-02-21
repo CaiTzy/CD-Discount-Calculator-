@@ -2,6 +2,19 @@
 
 A complete web-based enrollment management system built with PHP and MySQL, featuring an improved database schema with comprehensive validation, security, and audit capabilities.
 
+## ✨ NEW: Complete Sample Data Included!
+
+This system now comes with **complete, ready-to-use sample data**:
+- 🎓 **15 realistic student applications** with various statuses
+- 👥 **6 system users** (Admin, Staff, Registrar, Principal, Teacher)
+- 📚 **5 academic tracks** (STEM, ABM, HUMSS, GAS, TVL-ICT)
+- 📄 **Complete document records** with verification statuses
+- 📊 **Full enrollment history** (34 audit trail records)
+
+**One-command setup:** Run `./setup.sh` (Linux/Mac) or `setup.bat` (Windows) and you're ready to go!
+
+See [QUICKSTART.md](QUICKSTART.md) for instant setup instructions.
+
 ## 🎯 Features
 
 ### For Students
@@ -41,19 +54,50 @@ A complete web-based enrollment management system built with PHP and MySQL, feat
 
 ## 🚀 Quick Start
 
-### 1. Clone/Download the Repository
+### Automated Setup (Recommended)
+
+**For Linux/Mac:**
+```bash
+git clone https://github.com/CaiTzy/CD-Discount-Calculator-.git
+cd CD-Discount-Calculator-
+chmod +x setup.sh
+./setup.sh
+```
+
+**For Windows:**
+```batch
+git clone https://github.com/CaiTzy/CD-Discount-Calculator-.git
+cd CD-Discount-Calculator-
+setup.bat
+```
+
+That's it! The script automatically:
+- ✅ Creates the database
+- ✅ Imports the schema
+- ✅ Loads complete sample data (15 students, 6 users)
+- ✅ Sets up uploads directory
+
+**See [QUICKSTART.md](QUICKSTART.md) for detailed instructions.**
+
+### Manual Setup (Alternative)
+
+<details>
+<summary>Click to expand manual setup steps</summary>
+
+#### 1. Clone Repository
 ```bash
 git clone https://github.com/CaiTzy/CD-Discount-Calculator-.git
 cd CD-Discount-Calculator-
 ```
 
-### 2. Create Database
+#### 2. Create Database
 ```bash
 mysql -u root -p -e "CREATE DATABASE enrollment_system CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 mysql -u root -p enrollment_system < improved_schema.sql
+mysql -u root -p enrollment_system < complete_sample_data.sql
 ```
 
-### 3. Configure Database Connection
+#### 3. Configure Database Connection
 Edit `config.php`:
 ```php
 define('DB_HOST', 'localhost');
@@ -62,31 +106,27 @@ define('DB_PASS', 'your_password');
 define('DB_NAME', 'enrollment_system');
 ```
 
-### 4. Create Admin User
-```sql
-INSERT INTO Users (username, password_hash, email, full_name, role, is_active) 
-VALUES (
-    'admin', 
-    '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-    'admin@school.edu', 
-    'System Administrator', 
-    'Admin', 
-    1
-);
-```
-
-### 5. Set Permissions
+#### 4. Set Permissions
 ```bash
 mkdir uploads
 chmod 755 uploads
 ```
 
-### 6. Access the System
+</details>
+
+### Access the System
 - **Homepage**: `http://localhost/index.php`
 - **Student Enrollment**: `http://localhost/enrollment_form.php`
 - **Admin Login**: `http://localhost/login.php`
-  - Username: `admin`
-  - Password: `admin123`
+
+**Default Login:**
+- Username: `admin`
+- Password: `admin123`
+
+**Additional Test Users:**
+- `staff1` / `staff123` (Staff)
+- `registrar` / `registrar123` (Registrar)
+- `principal` / `principal123` (Principal)
 
 ## 📂 File Structure
 
@@ -100,11 +140,57 @@ chmod 755 uploads
 ├── view_application.php        # Application details view
 ├── logout.php                  # Logout handler
 ├── improved_schema.sql         # Enhanced database schema
+├── complete_sample_data.sql    # ⭐ Complete sample data (NEW!)
+├── setup.sh                    # ⭐ Automated setup for Linux/Mac (NEW!)
+├── setup.bat                   # ⭐ Automated setup for Windows (NEW!)
+├── QUICKSTART.md               # ⭐ Quick start guide (NEW!)
 ├── SCHEMA_IMPROVEMENTS.md      # Schema documentation
 ├── INSTALLATION_GUIDE.md       # Detailed installation guide
+├── PROJECT_SUMMARY.md          # Complete project summary
 ├── README.md                   # This file
 └── uploads/                    # Document storage directory
 ```
+
+## 📊 Sample Data Overview
+
+The `complete_sample_data.sql` file includes:
+
+### System Users (6)
+- **admin** / admin123 - System Administrator
+- **staff1** / staff123 - Maria Santos (Staff)
+- **staff2** / staff123 - Juan Dela Cruz (Staff)
+- **registrar** / registrar123 - Ana Reyes (Registrar)
+- **principal** / principal123 - Dr. Roberto Garcia (Principal)
+- **teacher1** / teacher123 - Elena Cruz (Teacher)
+
+### Student Applications (15)
+Realistic applications with various statuses:
+- ✅ **6 Enrolled** - Fully enrolled students
+- ⏳ **3 Approved** - Approved, awaiting enrollment
+- 🔍 **2 Under Review** - Being reviewed by staff
+- 📝 **2 Pending** - Newly submitted
+- ❌ **1 Rejected** - Did not meet requirements
+- 🚫 **1 Withdrawn** - Student withdrew
+
+### Academic Tracks (5)
+- **STEM** - Science, Technology, Engineering, Mathematics (₱25,000)
+- **ABM** - Accountancy, Business, Management (₱24,000)
+- **HUMSS** - Humanities and Social Sciences (₱23,000)
+- **GAS** - General Academic Strand (₱22,000)
+- **TVL-ICT** - Technical-Vocational-Livelihood ICT (₱26,000)
+
+### Document Records (15)
+Complete document tracking with verification statuses:
+- Birth certificates, diplomas, good moral certificates
+- Report cards, 2x2 photos, transfer credentials
+- Various verification statuses (Verified, Pending, Incomplete, Rejected)
+
+### Enrollment History (34 records)
+Full audit trail showing:
+- All status changes with timestamps
+- Who made each change
+- Reasons for status updates
+- Complete compliance history
 
 ## 🗄️ Database Schema
 
