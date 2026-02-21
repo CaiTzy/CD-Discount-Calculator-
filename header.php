@@ -64,14 +64,43 @@ $user_role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
                                 <i class="bi bi-house-door"></i> Home
                             </a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-speedometer2"></i> Dashboard
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="admin_dashboard.php">
+                                    <i class="bi bi-grid"></i> Main Dashboard
+                                </a></li>
+                                <li><a class="dropdown-item" href="student_list.php">
+                                    <i class="bi bi-table"></i> Simple View
+                                </a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-people"></i> Students
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="student_list.php">
+                                    <i class="bi bi-list-ul"></i> View All Students
+                                </a></li>
+                                <li><a class="dropdown-item" href="enrollment_page.php">
+                                    <i class="bi bi-person-plus"></i> New Enrollment
+                                </a></li>
+                                <li><a class="dropdown-item" href="enrollment_form.php">
+                                    <i class="bi bi-file-earmark-text"></i> Advanced Form
+                                </a></li>
+                            </ul>
+                        </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="student_list.php">
-                                <i class="bi bi-people"></i> Student List
+                            <a class="nav-link" href="upload_documents.php">
+                                <i class="bi bi-cloud-upload"></i> Documents
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="enrollment_page.php">
-                                <i class="bi bi-person-plus"></i> New Enrollment
+                            <a class="nav-link" href="all_features.php">
+                                <i class="bi bi-grid-3x3-gap"></i> All Features
                             </a>
                         </li>
                     <?php endif; ?>
